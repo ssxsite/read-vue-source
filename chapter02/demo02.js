@@ -1,5 +1,6 @@
-var target = function (val) {
-    console.log('set----------')
+/* 每个key都对应多个依赖，可以放在一个数组单独管理 */
+global.target = function (val) {
+    console.log('set---')
    return val
 }
 function defineReactiveData(data,key,val) {
@@ -8,7 +9,7 @@ function defineReactiveData(data,key,val) {
         enumerable:true,
         configurable:true,
         get:function () {
-            dep.push(target)
+            dep.push(global.target)
             return val
         },
         set:function (newVal) {

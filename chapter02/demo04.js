@@ -1,9 +1,10 @@
-/* 使用专门的Dep来管理依赖 */
-global.target = {
-    update:function () {
-        console.log('set---')
-    }
-}
+/* 用Watcher来抽象实际的依赖 */
+const Watcher =  require( './Watcher.js')
+// global.target = {
+//     update:function () {
+//         console.log('set---')
+//     }
+// }
 const Dep  = require( './Dep.js')
 function defineReactiveData(data,key,val) {
     let dep = new Dep();//依赖数组
@@ -25,7 +26,6 @@ function defineReactiveData(data,key,val) {
 }
 
 
-
 /*
     test-----------
 * */
@@ -41,9 +41,19 @@ for (let key in vm.data){
     defineReactiveData(vm.data,key,vm.data[key]);
 }
 
-console.log(vm.data.name)
-console.log(vm.data.name)
+/* 假设我们写了一个watch，它是如何执行的？ */
+// vm.watch('name',function(newVal,oldVal){
+//     console.log("数据变化了---",newVal,oldVal)
+// })
+
+var expOrFn = 'data.name'
+var cb = function(newVal,oldVal){
+    console.log("数据变化了---",newVal,oldVal)
+}
+var watcher = new Watcher(vm,expOrFn,cb)
 vm.data.name = 'lili'
+
+
 
 
 

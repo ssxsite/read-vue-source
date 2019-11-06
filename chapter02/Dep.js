@@ -11,19 +11,15 @@ module.exports = class Dep {
 
     notify(){
         for (let i = 0,len = this.subs.length; i < len; i++) {
-            this.subs[i]()
+            this.subs[i].update()
         }
     }
 
     depend(){
-        this.addSubs(target)
+        this.addSubs(global.target)
     }
 }
 
-var target = function (val) {
-    console.log('set----------')
-    return val
-}
 
 function remove(arr,item) {
     if(arr.length){

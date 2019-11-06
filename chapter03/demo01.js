@@ -1,0 +1,1 @@
+const arrayProto = Array.prototype;
