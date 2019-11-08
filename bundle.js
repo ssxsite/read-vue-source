@@ -86,6 +86,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./chapter02/$set.js":
+/*!***************************!*\
+  !*** ./chapter02/$set.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.default = $set;\n\nvar _defineReactiveData = __webpack_require__(/*! ./defineReactiveData.js */ \"./chapter02/defineReactiveData.js\");\n\nvar _defineReactiveData2 = _interopRequireDefault(_defineReactiveData);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction $set(target, key, val) {\n    target[key] = val;\n    (0, _defineReactiveData2.default)(target, key, val);\n}\n\n//# sourceURL=webpack:///./chapter02/$set.js?");
+
+/***/ }),
+
 /***/ "./chapter02/Dep.js":
 /*!**************************!*\
   !*** ./chapter02/Dep.js ***!
@@ -134,15 +146,15 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 
 /***/ }),
 
-/***/ "./chapter02/demo04.js":
+/***/ "./chapter02/demo05.js":
 /*!*****************************!*\
-  !*** ./chapter02/demo04.js ***!
+  !*** ./chapter02/demo05.js ***!
   \*****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _Observer = __webpack_require__(/*! ./Observer.js */ \"./chapter02/Observer.js\");\n\nvar _Observer2 = _interopRequireDefault(_Observer);\n\nvar _Watcher = __webpack_require__(/*! ./Watcher.js */ \"./chapter02/Watcher.js\");\n\nvar _Watcher2 = _interopRequireDefault(_Watcher);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/*\r\n    test-----------\r\n* */\n\nvar vm = {\n    data: {\n        a: {\n            b: {\n                c: 'c1'\n            }\n        },\n        age: 18\n    }\n};\n\nnew _Observer2.default(vm.data);\n\n/* 假设我们写了一个watch，它是如何执行的？ */\n// vm.watch('name',function(newVal,oldVal){\n//     console.log(\"数据变化了---\",newVal,oldVal)\n// })\n\nvar expOrFn = 'data.a.b.c';\nvar cb = function cb(newVal, oldVal) {\n    console.log(\"数据变化了---\", newVal, oldVal);\n};\nvar watcher = new _Watcher2.default(vm, expOrFn, cb);\nvm.data.a.b.c = 'c2';\n\n//# sourceURL=webpack:///./chapter02/demo04.js?");
+eval("\n\nvar _Observer = __webpack_require__(/*! ./Observer.js */ \"./chapter02/Observer.js\");\n\nvar _Observer2 = _interopRequireDefault(_Observer);\n\nvar _Watcher = __webpack_require__(/*! ./Watcher.js */ \"./chapter02/Watcher.js\");\n\nvar _Watcher2 = _interopRequireDefault(_Watcher);\n\nvar _$set = __webpack_require__(/*! ./$set.js */ \"./chapter02/$set.js\");\n\nvar _$set2 = _interopRequireDefault(_$set);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/*\r\n    test-----------\r\n* */\n\nvar vm = {\n    data: {\n        a: {\n            b: {\n                c: 'c1'\n            }\n        },\n        age: 18\n    }\n};\n\nnew _Observer2.default(vm.data); //响应式数据初始化已经完成\n//新增一个属性\n\nvm.data.a.b.d = 'd1';\n\nvar expOrFn = 'data.a.b.d';\nvar cb = function cb(newVal, oldVal) {\n    console.log(\"数据变化了---\", newVal, oldVal);\n};\nvar watcher = new _Watcher2.default(vm, expOrFn, cb);\nvm.data.a.b.d = 'd';\n\n//测试结果:d属性并不能监听到\n\n\nvm.$set = _$set2.default;\nvm.$set(vm.data.a.b, 'd', 'd1');\nvar expOrFn = 'data.a.b.d';\nvar cb = function cb(newVal, oldVal) {\n    console.log(\"数据变化了---\", newVal, oldVal);\n};\nvar watcher = new _Watcher2.default(vm, expOrFn, cb);\nvm.data.a.b.d = 'd2';\n\n//测试结果:d属性并可以监听到\n\n//# sourceURL=webpack:///./chapter02/demo05.js?");
 
 /***/ }),
 
@@ -166,7 +178,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\n__webpack_require__(/*! ./chapter02/demo04.js */ \"./chapter02/demo04.js\");\n\n//# sourceURL=webpack:///./main.js?");
+eval("\n\n__webpack_require__(/*! ./chapter02/demo05.js */ \"./chapter02/demo05.js\");\n\n//# sourceURL=webpack:///./main.js?");
 
 /***/ })
 
