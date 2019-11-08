@@ -1,30 +1,5 @@
-/* 用Watcher来抽象实际的依赖 */
-const Watcher =  require( './Watcher.js')
-// global.target = {
-//     update:function () {
-//         console.log('set---')
-//     }
-// }
-const Dep  = require( './Dep.js')
-function defineReactiveData(data,key,val) {
-    let dep = new Dep();//依赖数组
-    Object.defineProperty(data,key,{
-        enumerable:true,
-        configurable:true,
-        get:function () {
-            dep.depend();
-            return val
-        },
-        set:function (newVal) {
-            if(val === newVal){
-                return
-            }
-            val = newVal
-            dep.notify();
-        }
-    })
-}
-
+import Observer from './Observer.js'
+import Watcher from './Watcher.js'
 
 /*
     test-----------
@@ -32,26 +7,28 @@ function defineReactiveData(data,key,val) {
 
 var vm = {
     data:{
-        name:'susie',
+        a:{
+         b:{
+             c:'c1'
+         }
+        },
         age:18
     }
 }
 
-for (let key in vm.data){
-    defineReactiveData(vm.data,key,vm.data[key]);
-}
+new Observer(vm.data)
 
 /* 假设我们写了一个watch，它是如何执行的？ */
 // vm.watch('name',function(newVal,oldVal){
 //     console.log("数据变化了---",newVal,oldVal)
 // })
 
-var expOrFn = 'data.name'
+var expOrFn = 'data.a.b.c'
 var cb = function(newVal,oldVal){
     console.log("数据变化了---",newVal,oldVal)
 }
 var watcher = new Watcher(vm,expOrFn,cb)
-vm.data.name = 'lili'
+vm.data.a.b.c = 'c2'
 
 
 

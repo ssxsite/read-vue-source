@@ -1,5 +1,5 @@
 const bailRE = /[^\w.$]/
-const parsePah = function parsePah(path) {
+export default function parsePah(path) {
     if(bailRE.test(path)){
         return
     }
@@ -12,7 +12,6 @@ const parsePah = function parsePah(path) {
     }
 }
 
-module.exports = parsePah
 /* test---------*/
 // var test_obj = {
 //     a:{

@@ -1,4 +1,5 @@
-module.exports = class Dep {
+
+export default class Dep {
     constructor(){
         this.subs = []
     }
@@ -16,7 +17,7 @@ module.exports = class Dep {
     }
 
     depend(){
-        this.addSubs(global.target)
+        this.addSubs(window.target)
     }
 }
 

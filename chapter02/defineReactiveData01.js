@@ -1,4 +1,9 @@
 import Dep from './Dep.js'
+window.target  = {
+    update:function () {
+        console.log('set---')
+    }
+}
 
 export default function defineReactiveData (data, key, val) {
     let dep = new Dep();//依赖数组
@@ -19,6 +24,21 @@ export default function defineReactiveData (data, key, val) {
     })
 }
 
+
+
+/*
+    test-----------
+* */
+var obj = {
+    name:'susie',
+    age:18
+}
+for (let key in obj){
+    defineReactiveData(obj,key,obj[key]);
+}
+console.log(obj.age)
+console.log(obj.age)
+obj.age = 19
 
 
 
