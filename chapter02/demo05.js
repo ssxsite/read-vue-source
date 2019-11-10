@@ -44,8 +44,20 @@ vm.data.a.b.d = 'd2'
 
 //测试结果:d属性并可以监听到
 
+var expOrFn2 = function () {
+    console.log(data.a.b)
+    console.log(data.age)
+}
 
+var cb2 = function(newVal,oldVal){
+    console.log("数据变化了---",newVal,oldVal)
+}
 
+var watcher = new Watcher(vm,expOrFn2,cb2)
+
+setTimeout(()=>{
+    vm.data.a.b = 'b2'
+},2000)
 
 
 

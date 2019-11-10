@@ -2,7 +2,11 @@ import parsePah from './parsePath.js'
 export default class Watcher {
     constructor(vm,expOrFn,cb){
         this.vm = vm;
-        this.getter = parsePah(expOrFn);
+        if(typeof expOrFn === 'Function'){
+            this.getter = expOrFn
+        }else {
+            this.getter = parsePah(expOrFn);
+        }
         this.cb = cb;
         this.value = this.get()
     }
