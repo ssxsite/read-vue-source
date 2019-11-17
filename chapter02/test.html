@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="./vue.runtime.min.js"></script>-->
+    <script src="./vue.js"></script>
+    <script src="./virtualDom.js"></script>
+</head>
+<body>
+<div id="app">
+    <p> {{ message }}</p>
+    <button @click="change">修改</button>
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        },
+        methods:{
+            change(){
+                this.message = 'Hello World!'
+            }
+        }
+    })
+</script>
+</body>
+</html>
