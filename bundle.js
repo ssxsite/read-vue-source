@@ -86,37 +86,15 @@
 /************************************************************************/
 /******/ ({
 
-<<<<<<< HEAD
 /***/ "./chapter02/Dep.js":
 /*!**************************!*\
   !*** ./chapter02/Dep.js ***!
   \**************************/
-=======
-/***/ "./chapter04/app.vue":
-/*!***************************!*\
-  !*** ./chapter04/app.vue ***!
-  \***************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("throw new Error(\"Module parse failed: Unexpected token (1:0)\\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\\n> <template>\\n|     <div id=\\\"app\\\">\\n|         <p>{{obj.a}}</p>\");\n\n//# sourceURL=webpack:///./chapter04/app.vue?");
-
-/***/ }),
-
-/***/ "./chapter04/demo01.js":
-/*!*****************************!*\
-  !*** ./chapter04/demo01.js ***!
-  \*****************************/
->>>>>>> 2a3832b1715a978eeb973ef6a1a6741f18a43908
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-<<<<<<< HEAD
 eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Dep = function () {\n    function Dep() {\n        _classCallCheck(this, Dep);\n\n        this.subs = [];\n    }\n\n    _createClass(Dep, [{\n        key: \"addSubs\",\n        value: function addSubs(sub) {\n            this.subs.push(sub);\n        }\n    }, {\n        key: \"removeSubs\",\n        value: function removeSubs(sub) {\n            remove(this.subs, sub);\n        }\n    }, {\n        key: \"notify\",\n        value: function notify() {\n            for (var i = 0, len = this.subs.length; i < len; i++) {\n                this.subs[i].update();\n            }\n        }\n    }, {\n        key: \"depend\",\n        value: function depend() {\n            this.addSubs(window.target);\n        }\n    }]);\n\n    return Dep;\n}();\n\nexports.default = Dep;\n\n\nfunction remove(arr, item) {\n    if (arr.length) {\n        var index = arr.indexOf(item);\n        if (index > -1) {\n            arr.splice(index, 1);\n        }\n    }\n}\n\n//# sourceURL=webpack:///./chapter02/Dep.js?");
-=======
-eval("\n\nvar _vue = __webpack_require__(!(function webpackMissingModule() { var e = new Error(\"Cannot find module 'vue'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));\n\nvar _vue2 = _interopRequireDefault(_vue);\n\nvar _app = __webpack_require__(/*! ./app.vue */ \"./chapter04/app.vue\");\n\nvar _app2 = _interopRequireDefault(_app);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n// 在body下创建一个根节点\n\nnew _vue2.default({\n    el: '#root',\n    render: function render(createElement) {\n        return createElement(_app2.default);\n    }\n});\n\n//# sourceURL=webpack:///./chapter04/demo01.js?");
->>>>>>> 2a3832b1715a978eeb973ef6a1a6741f18a43908
 
 /***/ }),
 
@@ -130,7 +108,6 @@ eval("\n\nvar _vue = __webpack_require__(!(function webpackMissingModule() { var
 "use strict";
 eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _typeof = typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; };\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _defineReactiveData = __webpack_require__(/*! ./defineReactiveData.js */ \"./chapter02/defineReactiveData.js\");\n\nvar _defineReactiveData2 = _interopRequireDefault(_defineReactiveData);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Observer = function () {\n    function Observer(value) {\n        _classCallCheck(this, Observer);\n\n        this.value = value;\n        if (!Array.isArray(this.value)) {\n            this.walk(this.value);\n        }\n    }\n\n    _createClass(Observer, [{\n        key: 'walk',\n        value: function walk(obj) {\n            var keys = Object.keys(obj);\n            for (var i = 0, len = keys.length; i < len; i++) {\n                if (_typeof(obj[keys[i]]) === 'object') {\n                    new Observer(obj[keys[i]]);\n                }\n                (0, _defineReactiveData2.default)(obj, keys[i], obj[keys[i]]);\n            }\n        }\n    }]);\n\n    return Observer;\n}();\n\nexports.default = Observer;\n\n//# sourceURL=webpack:///./chapter02/Observer.js?");
 
-<<<<<<< HEAD
 /***/ }),
 
 /***/ "./chapter02/Watcher.js":
@@ -165,7 +142,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _Observer = __webpack_require__(/*! ./Observer.js */ \"./chapter02/Observer.js\");\n\nvar _Observer2 = _interopRequireDefault(_Observer);\n\nvar _Watcher = __webpack_require__(/*! ./Watcher.js */ \"./chapter02/Watcher.js\");\n\nvar _Watcher2 = _interopRequireDefault(_Watcher);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/*\r\n    test-----------\r\n* */\n\nvar vm = {\n    data: {\n        a: {\n            b: {\n                c: 'c1'\n            }\n        },\n        age: 18\n    }\n};\n\nnew _Observer2.default(vm.data);\n\n/* 假设我们写了一个watch，它是如何执行的？ */\n// vm.watch('name',function(newVal,oldVal){\n//     console.log(\"数据变化了---\",newVal,oldVal)\n// })\n\nvar expOrFn = 'data.a.b.c';\nvar cb = function cb(newVal, oldVal) {\n    console.log(\"数据变化了---\", newVal, oldVal);\n};\nvar watcher = new _Watcher2.default(vm, expOrFn, cb);\nvm.data.a.b.c = 'c2';\n\n//# sourceURL=webpack:///./chapter02/demo04.js?");
+eval("\n\nvar _Observer = __webpack_require__(/*! ./Observer.js */ \"./chapter02/Observer.js\");\n\nvar _Observer2 = _interopRequireDefault(_Observer);\n\nvar _Watcher = __webpack_require__(/*! ./Watcher.js */ \"./chapter02/Watcher.js\");\n\nvar _Watcher2 = _interopRequireDefault(_Watcher);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/*\r\n    test-----------\r\n* */\n\nvar vm = {\n    data: {\n        a: {\n            b: {\n                c: 'c1'\n            }\n        },\n        age: 18\n    }\n};\n\nnew _Observer2.default(vm.data);\n\n/* 假设我们写了一个watch，它是如何执行的？ */\n// vm.watch('name',function(newVal,oldVal){\n//     console.log(\"数据变化了---\",newVal,oldVal)\n// })\n\nvar expOrFn = 'data';\nvar cb = function cb(newVal, oldVal) {\n    console.log(\"数据变化了---\", newVal, oldVal);\n};\nvar watcher = new _Watcher2.default(vm, expOrFn, cb);\nvm.data.a.b.c = 'c2';\n\n//# sourceURL=webpack:///./chapter02/demo04.js?");
 
 /***/ }),
 
@@ -191,8 +168,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 "use strict";
 eval("\n\n__webpack_require__(/*! ./chapter02/demo04.js */ \"./chapter02/demo04.js\");\n\n//# sourceURL=webpack:///./main.js?");
 
-=======
->>>>>>> 2a3832b1715a978eeb973ef6a1a6741f18a43908
 /***/ })
 
 /******/ });

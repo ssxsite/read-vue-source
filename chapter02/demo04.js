@@ -23,7 +23,7 @@ new Observer(vm.data)
 //     console.log("数据变化了---",newVal,oldVal)
 // })
 
-var expOrFn = 'data.a.b.c'
+var expOrFn = 'data'
 var cb = function(newVal,oldVal){
     console.log("数据变化了---",newVal,oldVal)
 }

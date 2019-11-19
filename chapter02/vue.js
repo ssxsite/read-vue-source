@@ -3553,7 +3553,7 @@
       }
       // set parent
       vnode.parent = _parentVnode;
-      console.log(`vnode${new Date()}---------`,vnode)
+      // console.log(`vnode${new Date()}---------`,vnode)
       return vnode
     };
   }
@@ -4018,7 +4018,7 @@
       };
     } else {
       updateComponent = function () {
-        console.log(`updateComponent${new Date()}`)
+        // console.log(`updateComponent${new Date()}`)
         vm._update(vm._render(), hydrating);
       };
     }
@@ -4026,7 +4026,7 @@
     // we set this to vm._watcher inside the watcher's constructor
     // since the watcher's initial patch may call $forceUpdate (e.g. inside child
     // component's mounted hook), which relies on vm._watcher being already defined
-      console.log("noop----",noop);
+    //   console.log("noop----",noop);
     new Watcher(vm, updateComponent, noop, {
       before: function before () {
         if (vm._isMounted && !vm._isDestroyed) {
@@ -4903,9 +4903,9 @@
   function initMixin (Vue) {
     Vue.prototype._init = function (options) {
       debugger
-      console.log("options",options)
+      // console.log("options",options)
       var vm = this;//this就是vue实例
-        console.log(vm)
+        // console.log(vm)
       // a uid
       vm._uid = uid$3++;
 
@@ -4932,7 +4932,7 @@
           vm
         );
       }
-        console.log(vm.$options.el)
+        // console.log(vm.$options.el)
       /* istanbul ignore else */
       {
         initProxy(vm);

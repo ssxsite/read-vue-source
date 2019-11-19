@@ -11,17 +11,37 @@
 <div id="app">
     <p> {{ message }}</p>
     <button @click="change">修改</button>
+    <p><span>商品数量：{{count}}</span><span>商品价格：{{result}}</span></p>
+    <p>商品价格：{{getResult()}}</span></p>
+    <p>测试数据：{{num}}</p>
 </div>
 <script type="text/javascript">
     var app = new Vue({
         el: '#app',
         data: {
-            message: 'Hello Vue!'
+            message: 'Hello Vue!',
+            count:10,
+            num:0
         },
         methods:{
             change(){
                 this.message = 'Hello World!'
+            },
+            getResult(){
+                console.log("getResult------")
+                return this.count * 10
             }
+        },
+        computed:{
+            result(){
+                console.log("computed------")
+                return this.count * 10
+            }
+        },
+        created(){
+            // setInterval(() =>{
+            //     this.num ++
+            // },1000)
         }
     })
 </script>
