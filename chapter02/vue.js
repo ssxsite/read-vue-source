@@ -971,7 +971,7 @@
 
   /**
    * Augment a target Object or Array by defining
-   * hidden properties.
+   * hidden properties.git
    */
   /* istanbul ignore next */
   function copyAugment (target, src, keys) {
