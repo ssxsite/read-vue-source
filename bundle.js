@@ -98,15 +98,63 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 
 /***/ }),
 
-/***/ "./chapter02/defineReactiveData01.js":
-/*!*******************************************!*\
-  !*** ./chapter02/defineReactiveData01.js ***!
-  \*******************************************/
+/***/ "./chapter02/Observer.js":
+/*!*******************************!*\
+  !*** ./chapter02/Observer.js ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.default = defineReactiveData;\n\nvar _Dep = __webpack_require__(/*! ./Dep.js */ \"./chapter02/Dep.js\");\n\nvar _Dep2 = _interopRequireDefault(_Dep);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nwindow.target = {\n    update: function update() {\n        console.log('set---');\n    }\n};\n\nfunction defineReactiveData(data, key, val) {\n    var dep = new _Dep2.default(); //依赖数组\n    Object.defineProperty(data, key, {\n        enumerable: true,\n        configurable: true,\n        get: function get() {\n            dep.depend();\n            return val;\n        },\n        set: function set(newVal) {\n            if (val === newVal) {\n                return;\n            }\n            val = newVal;\n            dep.notify();\n        }\n    });\n}\n\n/*\r\n    test-----------\r\n* */\nvar obj = {\n    name: 'susie',\n    age: 18\n};\nfor (var key in obj) {\n    defineReactiveData(obj, key, obj[key]);\n}\nconsole.log(obj.age);\nconsole.log(obj.age);\nobj.age = 19;\n\n//# sourceURL=webpack:///./chapter02/defineReactiveData01.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _typeof = typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; };\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _defineReactiveData = __webpack_require__(/*! ./defineReactiveData.js */ \"./chapter02/defineReactiveData.js\");\n\nvar _defineReactiveData2 = _interopRequireDefault(_defineReactiveData);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Observer = function () {\n    function Observer(value) {\n        _classCallCheck(this, Observer);\n\n        this.value = value;\n        if (!Array.isArray(this.value)) {\n            this.walk(this.value);\n        }\n    }\n\n    _createClass(Observer, [{\n        key: 'walk',\n        value: function walk(obj) {\n            var keys = Object.keys(obj);\n            for (var i = 0, len = keys.length; i < len; i++) {\n                if (_typeof(obj[keys[i]]) === 'object') {\n                    new Observer(obj[keys[i]]);\n                }\n                (0, _defineReactiveData2.default)(obj, keys[i], obj[keys[i]]);\n            }\n        }\n    }]);\n\n    return Observer;\n}();\n\nexports.default = Observer;\n\n//# sourceURL=webpack:///./chapter02/Observer.js?");
+
+/***/ }),
+
+/***/ "./chapter02/Watcher.js":
+/*!******************************!*\
+  !*** ./chapter02/Watcher.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _parsePath = __webpack_require__(/*! ./parsePath.js */ \"./chapter02/parsePath.js\");\n\nvar _parsePath2 = _interopRequireDefault(_parsePath);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar Watcher = function () {\n    function Watcher(vm, expOrFn, cb) {\n        _classCallCheck(this, Watcher);\n\n        this.vm = vm;\n        if (typeof expOrFn === 'Function') {\n            this.getter = expOrFn;\n        } else {\n            this.getter = (0, _parsePath2.default)(expOrFn);\n        }\n        this.cb = cb;\n        this.value = this.get();\n    }\n\n    _createClass(Watcher, [{\n        key: 'get',\n        value: function get() {\n            window.target = this; //关键一：window.target指向自己\n            var value = this.getter.call(this.vm, this.vm); //关键二：执行getter,就触发了Dep.depend,也就把this加入到Dep中\n            window.target = undefined;\n            return value;\n        }\n    }, {\n        key: 'update',\n        value: function update() {\n            var oldValue = this.value;\n            this.value = this.getter.call(this.vm, this.vm);\n            this.cb.call(this, this.value, oldValue);\n        }\n    }]);\n\n    return Watcher;\n}();\n\nexports.default = Watcher;\n\n//# sourceURL=webpack:///./chapter02/Watcher.js?");
+
+/***/ }),
+
+/***/ "./chapter02/defineReactiveData.js":
+/*!*****************************************!*\
+  !*** ./chapter02/defineReactiveData.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.default = defineReactiveData;\n\nvar _Dep = __webpack_require__(/*! ./Dep.js */ \"./chapter02/Dep.js\");\n\nvar _Dep2 = _interopRequireDefault(_Dep);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction defineReactiveData(data, key, val) {\n    var dep = new _Dep2.default(); //依赖数组\n    Object.defineProperty(data, key, {\n        enumerable: true,\n        configurable: true,\n        get: function get() {\n            dep.depend();\n            return val;\n        },\n        set: function set(newVal) {\n            if (val === newVal) {\n                return;\n            }\n            val = newVal;\n            dep.notify();\n        }\n    });\n}\n\n//# sourceURL=webpack:///./chapter02/defineReactiveData.js?");
+
+/***/ }),
+
+/***/ "./chapter02/demo04.js":
+/*!*****************************!*\
+  !*** ./chapter02/demo04.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _Observer = __webpack_require__(/*! ./Observer.js */ \"./chapter02/Observer.js\");\n\nvar _Observer2 = _interopRequireDefault(_Observer);\n\nvar _Watcher = __webpack_require__(/*! ./Watcher.js */ \"./chapter02/Watcher.js\");\n\nvar _Watcher2 = _interopRequireDefault(_Watcher);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/*\r\n    test-----------\r\n* */\n\nvar vm = {\n    data: {\n        a: {\n            b: {\n                c: 'c1'\n            }\n        },\n        age: 18\n    }\n};\n\nnew _Observer2.default(vm.data);\n\n/* 假设我们写了一个watch，它是如何执行的？ */\n// vm.watch('name',function(newVal,oldVal){\n//     console.log(\"数据变化了---\",newVal,oldVal)\n// })\n\nvar expOrFn = 'data';\nvar cb = function cb(newVal, oldVal) {\n    console.log(\"数据变化了---\", newVal, oldVal);\n};\nvar watcher = new _Watcher2.default(vm, expOrFn, cb);\nvm.data.a.b.c = 'c2';\n\n//# sourceURL=webpack:///./chapter02/demo04.js?");
+
+/***/ }),
+
+/***/ "./chapter02/parsePath.js":
+/*!********************************!*\
+  !*** ./chapter02/parsePath.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.default = parsePah;\nvar bailRE = /[^\\w.$]/;\nfunction parsePah(path) {\n    if (bailRE.test(path)) {\n        return;\n    }\n    var segments = path.split('.');\n    return function (obj) {\n        for (var i = 0, len = segments.length; i < len; i++) {\n            obj = obj[segments[i]];\n        }\n        return obj;\n    };\n}\n\n/* test---------*/\n// var test_obj = {\n//     a:{\n//         b:{\n//             c:'c1'\n//         }\n//     }\n// }\n// var test_path = 'a.b.c'\n//\n// console.log('c:',parsePah(test_path).call(test_obj,test_obj));\n\n//# sourceURL=webpack:///./chapter02/parsePath.js?");
 
 /***/ }),
 
@@ -118,7 +166,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _defineReactiveData = __webpack_require__(/*! ./chapter02/defineReactiveData01.js */ \"./chapter02/defineReactiveData01.js\");\n\nvar _defineReactiveData2 = _interopRequireDefault(_defineReactiveData);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n//# sourceURL=webpack:///./main.js?");
+eval("\n\n__webpack_require__(/*! ./chapter02/demo04.js */ \"./chapter02/demo04.js\");\n\n//# sourceURL=webpack:///./main.js?");
 
 /***/ })
 

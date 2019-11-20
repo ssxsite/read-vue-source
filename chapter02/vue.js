@@ -4018,6 +4018,7 @@
       };
     } else {
       updateComponent = function () {
+        console.log('updateComponent')
         // console.log(`updateComponent${new Date()}`)
         vm._update(vm._render(), hydrating);
       };
